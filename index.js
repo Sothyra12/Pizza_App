@@ -6,6 +6,7 @@ const menu = [
   { name: "Italian", price: 20 },
 ];
 
+let nextOrderId = 1;
 let cashInRegister = 100;
 const orderQueue = [];
 
@@ -17,11 +18,21 @@ const placeOrder = (pizzaName) => {
 
   if (!findPizzaByName) return "Pizza not found!";
 
-  let updatedCashRegister = cashInRegister + findPizzaByName.price;
+  cashInRegister += findPizzaByName.price;
 
-  if (updatedCashRegister) {
-    let newOrder = { pizza: findPizzaByName, status: "ordered" };
-    orderQueue.push(newOrder);
-  }
+  let newOrder = { id: nextOrderId, pizza: findPizzaByName, status: "ordered" };
+  orderQueue.push(newOrder);
+  nextOrderId++;
+
   return orderQueue;
+};
+
+const completeOrder = (orderId) => {
+  const foundOrderInQueue = orderQueue.find((order) => order.id === orderId);
+
+  if (!foundOrderInQueue) return "Order not found!";
+
+  foundOrderInQueue.status = "completed";
+
+  return foundOrderInQueue;
 };
