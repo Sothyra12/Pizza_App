@@ -1,3 +1,14 @@
+type Pizza = {
+  name: string
+  price: number
+}
+
+type Order = {
+    id: number
+    pizza: Pizza
+    status: string
+}
+
 const menu = [
   { name: "Margarita", price: 10 },
   { name: "Peperoni", price: 13 },
@@ -6,14 +17,15 @@ const menu = [
   { name: "Italian", price: 20 },
 ];
 
-let nextOrderId = 1;
+
 let cashInRegister = 100;
-const orderQueue = [];
+let nextOrderId = 1;
+const orderQueue: Order = [];
 
 //  A utility function as a helper function that makes your code reusable
-const addNewPizza = (pizzaObj) => menu.push(pizzaObj);
+const addNewPizza = (pizzaObj: Pizza) => menu.push(pizzaObj);
 
-const placeOrder = (pizzaName) => {
+const placeOrder = (pizzaName: string) => {
   const findPizzaByName = menu.find((el) => el.name === pizzaName);
 
   if (!findPizzaByName) return "Pizza not found!";
@@ -27,7 +39,7 @@ const placeOrder = (pizzaName) => {
   return orderQueue;
 };
 
-const completeOrder = (orderId) => {
+const completeOrder = (orderId: number) => {
   const foundOrderInQueue = orderQueue.find((order) => order.id === orderId);
 
   if (!foundOrderInQueue) return "Order not found!";
@@ -35,10 +47,10 @@ const completeOrder = (orderId) => {
   foundOrderInQueue.status = "completed";
 
   return foundOrderInQueue;
-};
+}
 
 
-addNewPizza({name: "Spicy Cambodian Pizza", price: 20});
+addNewPizza({ name: "Spicy Cambodian Pizza", price: 20 });
 
 placeOrder("Spicy Cambodian Pizza");
 
@@ -47,3 +59,6 @@ completeOrder(1);
 console.log("Menu:", menu);
 console.log("Cash in register:", cashInRegister);
 console.log("Order queue:", orderQueue);
+
+
+export { };
