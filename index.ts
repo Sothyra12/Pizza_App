@@ -20,7 +20,7 @@ const menu = [
 
 let cashInRegister = 100;
 let nextOrderId = 1;
-const orderQueue: Order = [];
+const orderQueue: Order[] = [];
 
 //  A utility function as a helper function that makes your code reusable
 const addNewPizza = (pizzaObj: Pizza) => menu.push(pizzaObj);
@@ -28,6 +28,7 @@ const addNewPizza = (pizzaObj: Pizza) => menu.push(pizzaObj);
 const placeOrder = (pizzaName: string) => {
   const findPizzaByName = menu.find((el) => el.name === pizzaName);
 
+  // Handle findPizzaByName is case it is possibly undefined
   if (!findPizzaByName) return "Pizza not found!";
 
   cashInRegister += findPizzaByName.price;
@@ -42,6 +43,7 @@ const placeOrder = (pizzaName: string) => {
 const completeOrder = (orderId: number) => {
   const foundOrderInQueue = orderQueue.find((order) => order.id === orderId);
 
+  // Handle foundOrderInQueue is case it is possibly undefined
   if (!foundOrderInQueue) return "Order not found!";
 
   foundOrderInQueue.status = "completed";
