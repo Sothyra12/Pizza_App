@@ -62,3 +62,12 @@ const myName2 = "ju";
 
 
 // Union Types
+type User = {
+    username:  string
+    role:  "guest" | "member" | "admin"
+}
+type UserRole = "guest" | "member" | "admin";
+let userRole: UserRole = "member";
+
+
+// Function return types

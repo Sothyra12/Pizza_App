@@ -1,4 +1,5 @@
 type Pizza = {
+  id: number
   name: string
   price: number
 }
@@ -6,15 +7,15 @@ type Pizza = {
 type Order = {
     id: number
     pizza: Pizza
-    status: string
+    status: "ordered" | "completed"
 }
 
-const menu = [
-  { name: "Margarita", price: 10 },
-  { name: "Peperoni", price: 13 },
-  { name: "Vegetarian", price: 15 },
-  { name: "Mexican", price: 17 },
-  { name: "Italian", price: 20 },
+const menu: Pizza[] = [
+  { id: 1, name: "Margarita", price: 10 },
+  { id: 2, name: "Peperoni", price: 13 },
+  { id: 3, name: "Vegetarian", price: 15 },
+  { id: 4, name: "Mexican", price: 17 },
+  { id: 5, name: "Italian", price: 20 },
 ];
 
 
@@ -33,7 +34,7 @@ const placeOrder = (pizzaName: string) => {
 
   cashInRegister += findPizzaByName.price;
 
-  let newOrder = { id: nextOrderId, pizza: findPizzaByName, status: "ordered" };
+  let newOrder: Order = { id: nextOrderId, pizza: findPizzaByName, status: "ordered" };
   orderQueue.push(newOrder);
   nextOrderId++;
 
@@ -52,7 +53,20 @@ const completeOrder = (orderId: number) => {
 }
 
 
-addNewPizza({ name: "Spicy Cambodian Pizza", price: 20 });
+const getPizzaDetail = (identifier: string | number) => {
+  // type narrowing
+  // and be as explicit as we can => improving another devs experience 
+  if (typeof identifier === "number") {
+    return menu.find(el => el.id === identifier);
+  } else if (typeof identifier === "string") {
+    return menu.find(el => el.name.toLowerCase() === identifier.toLowerCase());
+  } else {
+    throw new TypeError("Parameter `identifier` must be either a string or a number");
+  }
+}
+
+
+addNewPizza({ id: 6, name: "Spicy Cambodian Pizza", price: 20 });
 
 placeOrder("Spicy Cambodian Pizza");
 
