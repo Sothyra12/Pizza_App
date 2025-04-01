@@ -24,13 +24,19 @@ let nextOrderId = 1;
 const orderQueue: Order[] = [];
 
 //  A utility function as a helper function that makes your code reusable
-const addNewPizza = (pizzaObj: Pizza) => menu.push(pizzaObj);
+// declaring a void type (to be more explicit), because this function does not return any value
+const addNewPizza = (pizzaObj: Pizza): void => {
+  menu.push(pizzaObj)
+};
 
-const placeOrder = (pizzaName: string) => {
+const placeOrder = (pizzaName: string): Order | undefined => {
   const findPizzaByName = menu.find((el) => el.name === pizzaName);
 
   // Handle findPizzaByName is case it is possibly undefined
-  if (!findPizzaByName) return "Pizza not found!";
+  if (!findPizzaByName) {
+    console.error("Pizza not found!");
+    return
+  };
 
   cashInRegister += findPizzaByName.price;
 
@@ -41,11 +47,14 @@ const placeOrder = (pizzaName: string) => {
   return orderQueue;
 };
 
-const completeOrder = (orderId: number) => {
+const completeOrder = (orderId: number): Order | undefined => {
   const foundOrderInQueue = orderQueue.find((order) => order.id === orderId);
 
   // Handle foundOrderInQueue is case it is possibly undefined
-  if (!foundOrderInQueue) return "Order not found!";
+  if (!foundOrderInQueue) {
+    console.error("Order not found!");
+    return 
+  };
 
   foundOrderInQueue.status = "completed";
 
@@ -53,7 +62,7 @@ const completeOrder = (orderId: number) => {
 }
 
 
-const getPizzaDetail = (identifier: string | number) => {
+const getPizzaDetail = (identifier: string | number): Pizza | undefined => {
   // type narrowing
   // and be as explicit as we can => improving another devs experience 
   if (typeof identifier === "number") {

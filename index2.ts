@@ -71,3 +71,26 @@ let userRole: UserRole = "member";
 
 
 // Function return types
+const users: User[] = [
+    { username: "juju", role: "admin"},
+    { username: "juju", role: "admin"},
+    { username: "juju", role: "admin"},
+    { username: "juju", role: "admin"},
+    { username: "juju", role: "admin"},
+];
+
+function fetchUserDetails(username: string): User {
+    const user = users.find((user) => user.username === username);
+    if (!user) {
+        throw new Error(`User with username ${username} not found!`);
+    }
+    return user;
+}
+
+
+// Any type
+// - decreases (turn off) the type checking in TS
+let countryOfBirth: any = "Cambodia"; // can be reassign in other types besides string
+
+
+// Unknown type
