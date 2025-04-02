@@ -10,26 +10,29 @@ type Order = {
     status: "ordered" | "completed"
 }
 
-const menu: Pizza[] = [
-  { id: 1, name: "Margarita", price: 10 },
-  { id: 2, name: "Peperoni", price: 13 },
-  { id: 3, name: "Vegetarian", price: 15 },
-  { id: 4, name: "Mexican", price: 17 },
-  { id: 5, name: "Italian", price: 20 },
-];
-
-
+// hoisting refers to the built-in behavior of the language through which declarations of functions, 
+// variables, and classes are moved to the top of their scope – all before code execution
 let cashInRegister = 100;
 let nextOrderId = 1;
+let nextPizzaId = 1;
 const orderQueue: Order[] = [];
+
+const menu: Pizza[] = [
+  { id: nextOrderId++, name: "Margarita", price: 10 },
+  { id: nextOrderId++, name: "Peperoni", price: 13 },
+  { id: nextOrderId++, name: "Vegetarian", price: 15 },
+  { id: nextOrderId++, name: "Mexican", price: 17 },
+  { id: nextOrderId++, name: "Italian", price: 20 },
+];
 
 //  A utility function as a helper function that makes your code reusable
 // declaring a void type (to be more explicit), because this function does not return any value
 const addNewPizza = (pizzaObj: Pizza): void => {
+  pizzaObj.id += nextPizzaId;
   menu.push(pizzaObj)
 };
 
-const placeOrder = (pizzaName: string): Order | undefined => {
+const placeOrder = (pizzaName: string): Order[] | undefined => {
   const findPizzaByName = menu.find((el) => el.name === pizzaName);
 
   // Handle findPizzaByName is case it is possibly undefined
@@ -40,9 +43,9 @@ const placeOrder = (pizzaName: string): Order | undefined => {
 
   cashInRegister += findPizzaByName.price;
 
-  let newOrder: Order = { id: nextOrderId, pizza: findPizzaByName, status: "ordered" };
+  let newOrder: Order = { id: nextOrderId++, pizza: findPizzaByName, status: "ordered" };
   orderQueue.push(newOrder);
-  nextOrderId++;
+  //nextOrderId++;
 
   return orderQueue;
 };
@@ -62,7 +65,7 @@ const completeOrder = (orderId: number): Order | undefined => {
 }
 
 
-const getPizzaDetail = (identifier: string | number): Pizza | undefined => {
+export const getPizzaDetail = (identifier: string | number): Pizza | undefined => {
   // type narrowing
   // and be as explicit as we can => improving another devs experience 
   if (typeof identifier === "number") {
@@ -75,15 +78,18 @@ const getPizzaDetail = (identifier: string | number): Pizza | undefined => {
 }
 
 
-addNewPizza({ id: 6, name: "Spicy Cambodian Pizza", price: 20 });
+addNewPizza({ name: "Spicy Cambodian Pizza", price: 20 });
+addNewPizza({ name: "Normal Cambodian Pizza", price: 15 });
 
-placeOrder("Spicy Cambodian Pizza");
+// placeOrder("Spicy Cambodian Pizza");
+// completeOrder(1);
 
-completeOrder(1);
+// placeOrder("Normal Cambodian Pizza");
+// completeOrder(2);
 
 console.log("Menu:", menu);
-console.log("Cash in register:", cashInRegister);
-console.log("Order queue:", orderQueue);
+// console.log("Cash in register:", cashInRegister);
+// console.log("Order queue:", orderQueue);
 
 
 export { };
