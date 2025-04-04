@@ -27,9 +27,13 @@ const menu: Pizza[] = [
 
 //  A utility function as a helper function that makes your code reusable
 // declaring a void type (to be more explicit), because this function does not return any value
-const addNewPizza = (pizzaObj: Pizza): void => {
-  pizzaObj.id += nextPizzaId;
-  menu.push(pizzaObj)
+const addNewPizza = (pizzaObj: Omit<Pizza, "id">): Pizza => {
+  const newPizza: Pizza = {
+    id: nextPizzaId++,
+    ...pizzaObj
+  }
+  menu.push(newPizza);
+  return newPizza;
 };
 
 const placeOrder = (pizzaName: string): Order[] | undefined => {
@@ -65,7 +69,7 @@ const completeOrder = (orderId: number): Order | undefined => {
 }
 
 
-export const getPizzaDetail = (identifier: string | number): Pizza | undefined => {
+const getPizzaDetail = (identifier: string | number): Pizza | undefined => {
   // type narrowing
   // and be as explicit as we can => improving another devs experience 
   if (typeof identifier === "number") {
@@ -79,7 +83,7 @@ export const getPizzaDetail = (identifier: string | number): Pizza | undefined =
 
 
 addNewPizza({ name: "Spicy Cambodian Pizza", price: 20 });
-addNewPizza({ name: "Normal Cambodian Pizza", price: 15 });
+//addNewPizza({ id: nextPizzaId++, name: "Normal Cambodian Pizza", price: 15 });
 
 // placeOrder("Spicy Cambodian Pizza");
 // completeOrder(1);
