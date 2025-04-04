@@ -1,20 +1,21 @@
 // Utility Types & Partial
-type User2 = {
+type User = {
     id: number
     username: string
     role: "member" | "contributor" | "admin"
 }
 
-type UpdatedUser2 = Partial<User2>
+type UpdatedUser = Partial<User>
 
-const users2: User2[] = [
-    {id: 1, username: "Sothyra1", role: "admin"},
-    {id: 2, username: "Sothyra2", role: "member"},
-    {id: 3, username: "Sothyra3", role: "contributor"},
+let nextUser = 1;
+
+const users: User[] = [
+    {id: nextUser++, username: "Sothyra1", role: "admin"},
+    {id: nextUser++, username: "Sothyra3", role: "contributor"},
 ]
 
-function updateUser(id: number, updates: UpdatedUser2) {
-    const foundUsers = users2.find(user => user.id === id);
+function updateUser(id: number, updates: UpdatedUser) {
+    const foundUsers = users.find(user => user.id === id);
 
     if (!foundUsers) {
         console.error("User id not found!");
@@ -24,16 +25,23 @@ function updateUser(id: number, updates: UpdatedUser2) {
     Object.assign(foundUsers, updates);
 }
 
-updateUser(1, {username: "Sothyra111"});
-updateUser(2, {role: "member"});
-
-console.log(users2);
-
+// updateUser(1, {username: "Sothyra111"});
+// updateUser(2, {role: "member"});
 
 
 // Omit Utility Type
+function addNewUser(newUser: Omit<User, "id">): User {
+    const user: User = {
+        id: nextUser++,
+        ...newUser // omitted id - remaining properties are name & role
+    }
+    users.push(user);
+    return user;
+}
+
+addNewUser({username: "Kimsreng", role: "admin"});
+console.log(users);
 
 export {}
-
 
 
