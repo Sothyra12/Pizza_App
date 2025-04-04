@@ -42,6 +42,20 @@ function addNewUser(newUser: Omit<User, "id">): User {
 addNewUser({username: "Kimsreng", role: "admin"});
 console.log(users);
 
+
+// Generics
+const gameScores = [1, 2, 3, 4, 5, 6];
+const favToys = ["stuffed animal", "stuffed anime character", "tedy bear"];
+const personalInfo = [{name: "JuJu", age: 20}, {name: "Kimsreng", age: 27}];
+
+// array parameter can be of any types - Generics come in handy here in this case
+// getLastItem<Type> -> Type or T is just the given name
+function getLastItem<Type>(array: Type[]): Type | undefined {
+    return array[array.length - 1];
+}
+
+console.log(getLastItem(gameScores));
+console.log(getLastItem(favToys));
+console.log(getLastItem(personalInfo));
+
 export {}
-
-

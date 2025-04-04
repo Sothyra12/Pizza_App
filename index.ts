@@ -82,7 +82,16 @@ const getPizzaDetail = (identifier: string | number): Pizza | undefined => {
 }
 
 
-addNewPizza({ name: "Spicy Cambodian Pizza", price: 20 });
+// Generics challenge
+function addToArray<T>(array: T[], item: T): T[] {
+  array.push(item);
+  return array;
+}
+addToArray(menu, {id: nextPizzaId++, name: "Pizza Pizza", price: 12});
+addToArray(orderQueue, {id: nextOrderId++, pizza: menu[5], status: "completed"}); // status property wrongly allowed other literals
+
+
+//addNewPizza({ name: "Spicy Cambodian Pizza", price: 20 });
 //addNewPizza({ id: nextPizzaId++, name: "Normal Cambodian Pizza", price: 15 });
 
 // placeOrder("Spicy Cambodian Pizza");
@@ -93,7 +102,7 @@ addNewPizza({ name: "Spicy Cambodian Pizza", price: 20 });
 
 console.log("Menu:", menu);
 // console.log("Cash in register:", cashInRegister);
-// console.log("Order queue:", orderQueue);
+console.log("Order queue:", orderQueue);
 
 
 export { };
