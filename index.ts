@@ -88,7 +88,7 @@ function addToArray<T>(array: T[], item: T): T[] {
   return array;
 }
 addToArray(menu, {id: nextPizzaId++, name: "Pizza Pizza", price: 12});
-addToArray(orderQueue, {id: nextOrderId++, pizza: menu[5], status: "completed"}); // status property wrongly allowed other literals
+addToArray<Order>(orderQueue, {id: nextOrderId++, pizza: menu[5], status: "completed"}); // status property wrongly allowed other literals
 
 
 //addNewPizza({ name: "Spicy Cambodian Pizza", price: 20 });

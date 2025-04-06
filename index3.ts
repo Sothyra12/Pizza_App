@@ -29,6 +29,7 @@ function updateUser(id: number, updates: UpdatedUser) {
 // updateUser(2, {role: "member"});
 
 
+
 // Omit Utility Type
 function addNewUser(newUser: Omit<User, "id">): User {
     const user: User = {
@@ -39,8 +40,9 @@ function addNewUser(newUser: Omit<User, "id">): User {
     return user;
 }
 
-addNewUser({username: "Kimsreng", role: "admin"});
-console.log(users);
+// addNewUser({username: "Kimsreng", role: "admin"});
+// console.log(users);
+
 
 
 // Generics
@@ -54,8 +56,41 @@ function getLastItem<Type>(array: Type[]): Type | undefined {
     return array[array.length - 1];
 }
 
-console.log(getLastItem(gameScores));
-console.log(getLastItem(favToys));
-console.log(getLastItem(personalInfo));
+// console.log(getLastItem(gameScores));
+// console.log(getLastItem(favToys));
+// console.log(getLastItem(personalInfo));
+
+
+
+// Explicitly Type Generic function calls
+type Pizza = {
+    id: number
+    name: string
+    price: number
+}
+
+type Order = {
+    id: number
+    pizza: Pizza
+    status: "ordered" | "completed"
+}
+
+let nextOrderId = 1;
+let nextPizzaId = 1;
+const orderQueue: Order[] = [];
+
+const menu: Pizza[] = [
+    { id: nextOrderId++, name: "Margarita", price: 10 },
+];
+
+function addToArray<T>(array: T[], item: T): T[] {
+    array.push(item);
+    return array;
+}
+
+// Explicitly Type Generic function calls
+addToArray<Pizza>(menu, {id: nextPizzaId++, name: "Pizza Pizza", price: 12});
+addToArray<Order>(orderQueue, {id: nextOrderId++, pizza: menu[5], status: "completed"}); // status property wrongly allowed other literals without explicit type generic provided "<Order>"
+
 
 export {}
